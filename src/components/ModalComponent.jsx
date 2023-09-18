@@ -1,29 +1,32 @@
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getSelectDate } from "../features/dateSlice";
 import { useState } from "react";
 
-const ModalComponent = ({ onOpenModal, open, onCloseModal }) => {
+const ModalComponent = ({ onOpenModal, open, onCloseModal, put, id }) => {
   const { date } = useSelector(getSelectDate);
   const [events, setEvents] = useState();
 
+  const dispatch = useDispatch();
   const handelSubmit = async (e) => {
     
     e.preventDefault();
     try {
       // const formData = new FormData();
-      const data = {
+      const dataForm = {
         title: events,
         date: date
       }
+      
       console.log(events)
-      const res = await fetch("http://localhost:5000/api/post", {
-        method: "POST",
+      const {data} = await fetch(`http://localhost:5000/api/post/${id ||""}`, {
+        method: `${put ? "PUT":"POST"}`,
         headers:{"Content-Type": "application/json"}, 
-        body: JSON.stringify(data)
-      });
-      console.log(res);
+        body: JSON.stringify(dataForm)
+      }).then(res=> res.json());
+      console.log(data)
+      dispatch(setEvents(data))
     } catch (e) {
       console.log(e);
     }
