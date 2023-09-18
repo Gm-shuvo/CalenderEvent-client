@@ -1,4 +1,5 @@
 import DayToday from "../components/DayToday";
+import Events from "../components/Events";
 import WeekDay from "../components/WeekDay";
 
 const Clander = () => {
@@ -9,7 +10,10 @@ const Clander = () => {
         <WeekDay/>
         
       </div>
-      <div className="right flex-[.3] bg-gray-300 rounded-md"></div>
+      <div className="right flex-[.3] bg-gray-300 rounded-md ">
+        <h1 className="text-2xl md:text-3xl font-bold text-center h-[54px] flex items-center justify-center">Events</h1>
+        <Events/>
+      </div>
     </div>
   );
 }
